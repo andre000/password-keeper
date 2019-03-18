@@ -41,6 +41,7 @@
 
 <script>
 export default {
+  middleware: 'auth',
   data: () => ({
     collapsed: false,
   }),

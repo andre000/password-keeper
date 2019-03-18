@@ -1,3 +1,4 @@
+require('dotenv').config();
 const pkg = require('./package');
 
 module.exports = {
@@ -49,9 +50,18 @@ module.exports = {
   ** Axios module configuration
   */
   axios: {
-    // See https://github.com/nuxt-community/axios-module#options
+    baseUrl: process.env.API_URL || 'http://localhost:1224',
   },
 
+  /*
+  ** Environment Config
+  */
+  env: {
+    API_URL: process.env.API_URL || 'http://localhost:1224',
+    ENDPOINT_URL: process.env.ENDPOINT_URL || '/gql',
+    LOGIN_URL: process.env.LOGIN_URL || '/login',
+    START_URL: process.env.START_URL || '/start',
+  },
   /*
   ** Build configuration
   */
