@@ -11,15 +11,25 @@
           <h2>Welcome Back!</h2>
           <h4>Log in to continue</h4>
         </div>
-        <form @submit.prevent="login">
+        <form>
           <div class="input-group">
-            <a-input v-model="email" type="email" placeholder="Email">
+            <a-input
+              v-model="email"
+              type="email"
+              placeholder="Email"
+              @keypress.enter="login"
+            >
               <a-icon slot="prefix" type="user" />
               <a-icon v-if="email" slot="suffix" type="close-circle" @click="cleanEmail" />
             </a-input>
           </div>
           <div class="input-group">
-            <a-input v-model="password" type="password" placeholder="Password">
+            <a-input
+              v-model="password"
+              type="password"
+              placeholder="Password"
+              @keypress.enter="login"
+            >
               <a-icon slot="prefix" type="lock" />
               <a-icon v-if="password" slot="suffix" type="close-circle" @click="cleanPass" />
             </a-input>

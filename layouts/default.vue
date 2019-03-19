@@ -14,7 +14,7 @@
         </template>
       </div>
       <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
-        <a-menu-item key="1">
+        <a-menu-item key="1" @click="$router.push('/')">
           <a-icon type="bars" />
           <span>All Items</span>
         </a-menu-item>
@@ -53,11 +53,11 @@ export default {
 .ant-layout-content {
   margin: 24px 16px;
   padding: 24px;
-  background: #fff;
   min-height: 280px;
 }
 
 #main-menu {
+  height: 100vh;
   .trigger {
     font-size: 18px;
     line-height: 64px;
