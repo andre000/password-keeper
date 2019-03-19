@@ -11,7 +11,7 @@
           <h2>Welcome Back!</h2>
           <h4>Log in to continue</h4>
         </div>
-        <form>
+        <form @submit.prevent="login">
           <div class="input-group">
             <a-input v-model="email" type="email" placeholder="Email">
               <a-icon slot="prefix" type="user" />
@@ -28,7 +28,7 @@
             <a-checkbox>Remember me</a-checkbox>
             <a href="#">Forgot Password?</a>
           </div>
-          <a-button type="primary">
+          <a-button type="primary" @click="login">
             Login
           </a-button>
         </form>
@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import { login, logout } from '../utils';
+
 export default {
   layout: 'login',
   data: () => ({
@@ -45,12 +47,27 @@ export default {
     password: '',
   }),
 
+  mounted() {
+    logout(this.$store);
+  },
+
   methods: {
     cleanEmail() {
       this.email = '';
     },
     cleanPass() {
       this.password = '';
+    },
+    async login() {
+      const result = await login({
+        email: this.email,
+        password: this.password,
+        store: this.$store,
+      });
+
+      if (result === true) {
+        this.$router.push('/');
+      }
     },
   },
 };
@@ -61,6 +78,9 @@ export default {
 @media screen and (max-width: 768px){
   .logo-column {
     display: none !important
+  }
+  .form-column {
+    width: 100vw
   }
 }
   .logo-column {

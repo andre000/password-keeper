@@ -47,7 +47,9 @@ export default {
   }),
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
+@import url('~/assets/scss/main.scss');
+
 .ant-layout-content {
   margin: 24px 16px;
   padding: 24px;
@@ -55,29 +57,32 @@ export default {
   min-height: 280px;
 }
 
-#main-menu .trigger {
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color .3s;
-}
+#main-menu {
+  .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color .3s;
+    &:hover {
+      color: #1890ff;
+    }
+  }
 
-#main-menu .trigger:hover {
-  color: #1890ff;
-}
-
-#main-menu .logo {
-  height: 32px;
-  margin: 16px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-weight: bold;
-  color: white;
-  display: flex;
-  align-content: center;
-  justify-content: center;
+  .logo {
+    height: 32px;
+    margin: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    font-family: 'PT Sans', sans-serif;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
 }
 
 .ant-menu-item-divider {
