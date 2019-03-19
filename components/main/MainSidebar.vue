@@ -1,0 +1,38 @@
+<template>
+  <a-layout-sider
+    v-model="collapsed"
+    breakpoint="sm"
+    collapsible
+  >
+    <div class="logo">
+      <template v-if="!collapsed">
+        Password Keeper
+      </template>
+      <template v-else>
+        PK
+      </template>
+    </div>
+    <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
+      <a-menu-item key="1" @click="$router.push('/')">
+        <a-icon type="bars" />
+        <span>All Items</span>
+      </a-menu-item>
+      <a-menu-divider />
+      <a-menu-item v-if="!collapsed" class="menu-subtitle" disabled>
+        FOLDERS
+      </a-menu-item>
+    </a-menu>
+  </a-layout-sider>
+</template>
+
+<script>
+export default {
+  data: () => ({
+    collapsed: false,
+  }),
+};
+</script>
+
+<style>
+
+</style>

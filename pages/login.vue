@@ -58,7 +58,7 @@ export default {
   }),
 
   mounted() {
-    logout(this.$store);
+    logout(this.$store, this.$apolloHelpers);
   },
 
   methods: {
@@ -73,6 +73,7 @@ export default {
         email: this.email,
         password: this.password,
         store: this.$store,
+        apollo: this.$apolloHelpers,
       });
 
       if (result === true) {

@@ -1,0 +1,5 @@
+query LoggedUser($user: String!) {
+  user(_id: $user) {
+    name
+  }
+}

@@ -45,6 +45,7 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/apollo',
   ],
   /*
   ** Axios module configuration
@@ -82,6 +83,20 @@ module.exports = {
           },
         });
       }
+    },
+  },
+
+  apollo: {
+    authenticationType: '',
+    includeNodeModules: true,
+    clientConfigs: {
+      default: {
+        httpEndpoint: process.env.API_URL + process.env.ENDPOINT_URL || 'http://localhost:1224/gql',
+        httpLinkOptions: {
+          credentials: 'omit',
+        },
+        tokenName: 'auth',
+      },
     },
   },
 };
