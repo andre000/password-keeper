@@ -13,7 +13,7 @@
           <a-icon type="lock" />Change Password
         </a-menu-item>
         <a-menu-divider />
-        <a-menu-item key="2" @click="$router.push('/logout')">
+        <a-menu-item key="2" @click="$router.push('/login')">
           <a-icon type="logout" />
           Logout
         </a-menu-item>

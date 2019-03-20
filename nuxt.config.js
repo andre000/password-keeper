@@ -36,6 +36,7 @@ module.exports = {
   */
   plugins: [
     '@/plugins/antd-ui',
+    '@/plugins/vue-bar',
   ],
 
   /*
