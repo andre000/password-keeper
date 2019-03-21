@@ -1,3 +1,4 @@
+require('dotenv').config();
 const pkg = require('./package');
 
 module.exports = {
@@ -44,14 +45,24 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/apollo',
   ],
   /*
   ** Axios module configuration
   */
   axios: {
-    // See https://github.com/nuxt-community/axios-module#options
+    baseUrl: process.env.API_URL || 'http://localhost:1224',
   },
 
+  /*
+  ** Environment Config
+  */
+  env: {
+    API_URL: process.env.API_URL || 'http://localhost:1224',
+    ENDPOINT_URL: process.env.ENDPOINT_URL || '/gql',
+    LOGIN_URL: process.env.LOGIN_URL || '/login',
+    START_URL: process.env.START_URL || '/start',
+  },
   /*
   ** Build configuration
   */
@@ -67,8 +78,25 @@ module.exports = {
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
           exclude: /(node_modules)/,
+          options: {
+            fix: true,
+          },
         });
       }
+    },
+  },
+
+  apollo: {
+    authenticationType: '',
+    includeNodeModules: true,
+    clientConfigs: {
+      default: {
+        httpEndpoint: process.env.API_URL + process.env.ENDPOINT_URL || 'http://localhost:1224/gql',
+        httpLinkOptions: {
+          credentials: 'omit',
+        },
+        tokenName: 'auth',
+      },
     },
   },
 };

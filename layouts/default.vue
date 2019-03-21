@@ -1,55 +1,94 @@
 <template>
-  <div>
-    <nuxt />
-  </div>
+  <a-layout id="main-menu">
+    <main-sidebar />
+    <a-layout>
+      <main-header :user="loggedUser" />
+      <a-layout-content>
+        <nuxt />
+      </a-layout-content>
+    </a-layout>
+  </a-layout>
 </template>
 
-<style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
+<script>
+import mainSidebar from '@/components/main/MainSidebar';
+import mainHeader from '@/components/main/MainHeader';
+import { loggedUser } from '../graphql';
+
+export default {
+  middleware: 'auth',
+  components: {
+    mainSidebar,
+    mainHeader,
+  },
+
+  data: () => ({
+    loggedUser: '',
+  }),
+
+  apollo: {
+    loggedUser: {
+      query: loggedUser,
+      update: ({ user }) => user.name,
+      variables() {
+        return {
+          user: this.userID,
+        };
+      },
+    },
+  },
+
+  computed: {
+    userID() {
+      return this.$store.state.user;
+    },
+  },
+};
+</script>
+<style lang="scss">
+@import url('~/assets/scss/main.scss');
+
+.ant-layout-content {
+  margin: 24px 16px;
+  padding: 24px;
+  min-height: 280px;
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
+#main-menu {
+  height: 100vh;
+  .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color .3s;
+    &:hover {
+      color: #1890ff;
+    }
+  }
+
+  .logo {
+    height: 32px;
+    margin: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    font-family: 'PT Sans', sans-serif;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
 }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
+.ant-menu-item-divider {
+  background-color: #ffffff33 !important;
 }
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+.menu-subtitle {
+  font-variant: all-small-caps;
+  cursor: auto;
 }
 </style>

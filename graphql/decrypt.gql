@@ -1,0 +1,3 @@
+query decrypyOne($value: String!) {
+  decrypt(value: $value)
+}
