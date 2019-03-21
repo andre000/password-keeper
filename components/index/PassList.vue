@@ -1,14 +1,12 @@
 <template>
-  <!-- <a-list item-layout="horizontal" :data-source="passwords">
-    <a-list-item slot="renderItem" slot-scope="pass">
-      <a-list-item-meta :description="pass.username">
-        <a slot="title" class="pass-title" href="#">{{ pass.title }}</a>
-        <a-avatar slot="avatar" />
-      </a-list-item-meta>
-    </a-list-item>
-  </a-list> -->
   <div>
-    <a-card v-for="(pass, k) in passwords" :key="k" class="password-card">
+    <a-card
+      v-for="(pass, k) in passwords"
+      :key="k"
+      :class="{'selected': pass._id === selectedPassID}"
+      class="password-card"
+      @click="selectPassword(pass)"
+    >
       <a-avatar class="password-icon">
         <i :class="pass.icon ? pass.icon : 'mdi-help'" class="mdi" />
       </a-avatar>
@@ -29,6 +27,7 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex';
 import passList from '@/graphql/listPasswords.gql';
 
 export default {
@@ -36,6 +35,18 @@ export default {
     passwords: {
       query: passList,
     },
+  },
+
+  computed: {
+    ...mapState('mainPage', ['selectedPassID']),
+  },
+
+  methods: {
+    selectPassword(pass) {
+      const id = pass._id === this.selectedPassID ? null : pass._id;
+      this.SET_SELECTED_PASS_ID(id);
+    },
+    ...mapMutations('mainPage', ['SET_SELECTED_PASS_ID']),
   },
 };
 </script>

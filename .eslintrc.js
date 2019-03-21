@@ -17,5 +17,6 @@ module.exports = {
     'nuxt/no-cjs-in-config': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/no-unresolved': 'off',
+    'no-underscore-dangle': 'off',
   }
 }

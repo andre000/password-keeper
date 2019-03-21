@@ -1,22 +1,26 @@
 <template>
   <a-row :gutter="32">
     <a-col :span="8">
-      <div v-bar class="content">
+      <div class="content">
         <pass-list />
       </div>
     </a-col>
     <a-col :span="16">
-      <div class="content white" />
+      <div class="content">
+        <pass-detail />
+      </div>
     </a-col>
   </a-row>
 </template>
 
 <script>
 import passList from '@/components/index/PassList';
+import passDetail from '@/components/index/PassDetail';
 
 export default {
   components: {
     passList,
+    passDetail,
   },
 };
 </script>
