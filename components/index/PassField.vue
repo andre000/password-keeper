@@ -3,20 +3,29 @@
     <a-form-item :label="title">
       <a-input
         v-model="fieldValue"
-        :type="fieldType()"
+        class="pass-field"
+        :disabled="!isEditing"
+        :type="fieldType"
+        @input="$emit('input', { key: 'value', value: fieldValue})"
       >
         <div slot="addonAfter" class="field-actions">
           <a-tooltip placement="top">
             <template slot="title">
               <span>{{ decryped ? "Hide Value" : "Decrypt Value" }}</span>
             </template>
-            <a-icon :type="lockType()" @click="decrypt" />
+            <a-icon :type="lockType" @click="decrypt" />
           </a-tooltip>
           <a-tooltip placement="top">
             <template slot="title">
               <span>Copy to Clipboard</span>
             </template>
             <a-icon type="copy" @click="copy" />
+          </a-tooltip>
+          <a-tooltip v-if="isEditing" placement="top">
+            <template slot="title">
+              <span>Delete Field</span>
+            </template>
+            <a-icon type="delete" @click="deleteField" />
           </a-tooltip>
         </div>
       </a-input>
@@ -38,6 +47,10 @@ export default {
       type: String,
       default: '',
     },
+    isEditing: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data: () => ({
@@ -46,8 +59,31 @@ export default {
   }),
 
   computed: {
-    fieldValue() {
-      return this.decryped ? this.decryptedValue : this.value;
+    fieldValue: {
+      get() {
+        if (this.isEditing && !this.decryptedValue) {
+          this.decrypt();
+        }
+        return (this.decryped || this.isEditing) ? this.decryptedValue : this.value;
+      },
+      set(value) {
+        this.decryptedValue = value;
+      },
+    },
+    lockType() {
+      return this.decryped ? 'lock' : 'unlock';
+    },
+    fieldType() {
+      return this.decryped ? 'text' : 'password';
+    },
+  },
+
+  watch: {
+    isEditing() {
+      if (this.isEditing === false) {
+        this.decryptedValue = '';
+      }
+      this.decryped = false;
     },
   },
 
@@ -64,21 +100,18 @@ export default {
       }
 
       const client = this.$apollo.getClient();
+
+      if (Number.isNaN(parseInt(this.value, 16))) return false;
+
       const { data } = await client.query({
         query: decryptOne,
         variables: { value: this.value },
       });
 
       this.decryptedValue = data.decrypt;
-      this.decryped = true;
+      this.decryped = !this.isEditing;
+      this.$emit('input', { key: 'value', value: this.fieldValue });
       return true;
-    },
-
-    lockType() {
-      return this.decryped ? 'lock' : 'unlock';
-    },
-    fieldType() {
-      return this.decryped ? 'text' : 'password';
     },
 
     async copy() {
@@ -89,6 +122,10 @@ export default {
       copyToClipboard(this.decryptedValue);
       this.$message.info('Copied to the Clipboard!');
     },
+
+    deleteField() {
+      this.$emit('delete');
+    },
   },
 };
 </script>
@@ -96,5 +133,13 @@ export default {
 <style scoped>
   .field-actions i {
     cursor: pointer
+  }
+</style>
+
+<style>
+  .pass-field input:disabled {
+    background: #fff;
+    color: #888;
+    cursor: initial;
   }
 </style>

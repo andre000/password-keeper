@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="password-list">
     <a-card
       v-for="(pass, k) in passwords"
       :key="k"
@@ -23,6 +23,7 @@
         </a-tooltip>
       </div>
     </a-card>
+    <a-button type="primary" shape="circle" icon="plus" />
   </div>
 </template>
 
@@ -80,6 +81,16 @@ export default {
   }
   .password-subtitle {
     color: #aaa
+  }
+
+  .password-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .password-card {
+    width: 100%
   }
 </style>
 
