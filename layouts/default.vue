@@ -29,7 +29,15 @@ export default {
   apollo: {
     loggedUser: {
       query: loggedUser,
-      update: ({ user }) => user.name,
+      update: ({ user }) => (user ? user.name : null),
+      error({ networkError }) {
+        const status = networkError ? networkError.statusCode : 500;
+        const message = (networkError && networkError.result)
+          ? networkError.result.error
+          : 'An error ocurred. Try again later.';
+
+        this.$root.error({ statusCode: status, message });
+      },
       variables() {
         return {
           user: this.userID,

@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 import passList from '@/components/index/PassList';
 import passDetail from '@/components/index/PassDetail';
 
@@ -22,6 +23,17 @@ export default {
     passList,
     passDetail,
   },
+
+  created() {
+    this.SET_SELECTED_PASS(null);
+    this.SET_SELECTED_PASS_ID(null);
+  },
+
+  methods: {
+    ...mapMutations('mainPage', ['SET_SELECTED_PASS_ID', 'SET_SELECTED_PASS']),
+  },
+
+
 };
 </script>
 

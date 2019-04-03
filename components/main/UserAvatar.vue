@@ -10,7 +10,7 @@
           <a-icon type="setting" />Options
         </a-menu-item>
         <a-menu-item key="1">
-          <a-icon type="lock" />Change Password
+          <a-icon type="key" />Change Password
         </a-menu-item>
         <a-menu-divider />
         <a-menu-item key="2" @click="$router.push('/login')">
