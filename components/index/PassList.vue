@@ -19,16 +19,16 @@
           <template slot="title">
             <span>Delete Password</span>
           </template>
-          <a-icon type="delete" />
+          <a-icon type="delete" @click.stop="deletePassword(pass._id)" />
         </a-tooltip>
       </div>
     </a-card>
-    <a-button type="primary" shape="circle" icon="plus" />
+    <a-button type="primary" shape="circle" icon="plus" @click.self.prevent="newPassword()" />
   </div>
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapMutations, mapState, mapActions } from 'vuex';
 import passList from '@/graphql/listPasswords.gql';
 
 export default {
@@ -47,7 +47,15 @@ export default {
       const id = pass._id === this.selectedPassID ? null : pass._id;
       this.SET_SELECTED_PASS_ID(id);
     },
-    ...mapMutations('mainPage', ['SET_SELECTED_PASS_ID']),
+    deletePassword(id) {
+      this.deletePassword(id);
+    },
+    newPassword() {
+      this.SET_SELECTED_PASS_ID('NEW');
+      this.SET_SELECTED_PASS({});
+    },
+    ...mapMutations('mainPage', ['SET_SELECTED_PASS_ID', 'SET_SELECTED_PASS']),
+    ...mapActions('mainPage', ['deletePassword']),
   },
 };
 </script>

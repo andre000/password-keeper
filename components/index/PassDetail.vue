@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 // import decryptOne from '@/graphql/decrypt.gql';
 import PassField from '@/components/index/PassField';
 import PassNewField from '@/components/index/PassNewField';
@@ -96,6 +96,11 @@ export default {
 
   watch: {
     async selectedPassID() {
+      if (this.selectedPassID === 'NEW') {
+        this.pass = {};
+        this.isEditing = true;
+        return;
+      }
       await this.getPassDetail(this.selectedPassID);
       this.pass = JSON.parse(JSON.stringify(this.selectedPass)) || {};
     },
@@ -107,6 +112,10 @@ export default {
     },
     async saveEdit() {
       const editedPass = this.pass;
+      if (!editedPass.fields) {
+        editedPass.fields = [];
+      }
+
       editedPass.fields = [
         ...editedPass.fields.map((d) => {
           // eslint-disable-next-line
@@ -117,7 +126,7 @@ export default {
       ];
 
       await this.savePassword({
-        id: editedPass._id,
+        id: editedPass._id === 'NEW' ? null : editedPass._id,
         icon: editedPass.icon,
         title: editedPass.title,
         username: editedPass.username,
@@ -134,6 +143,7 @@ export default {
       this.pass = JSON.parse(JSON.stringify(this.selectedPass)) || {};
       this.isEditing = false;
       this.newFields = [];
+      if (this.selectedPassID === 'NEW') this.SET_SELECTED_PASS_ID(null);
     },
     async addNewField() {
       this.newFields = [...this.newFields, { title: '', value: '' }];
@@ -153,6 +163,7 @@ export default {
       this.pass.fields[index][key] = value;
     },
     ...mapActions('mainPage', ['getPassDetail', 'savePassword']),
+    ...mapMutations('mainPage', ['SET_SELECTED_PASS_ID']),
   },
 };
 </script>
