@@ -42,7 +42,7 @@ export default {
 
 <style scoped>
 .content {
-  height: calc(100vh - 144px);
+  height: calc(100vh - 212px);
   overflow-y: auto;
 }
 .content.white {
