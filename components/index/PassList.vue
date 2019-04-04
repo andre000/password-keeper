@@ -15,12 +15,17 @@
         <span class="password-subtitle">{{ pass.username }}</span>
       </div>
       <div class="password-actions">
-        <a-tooltip placement="top">
+        <a-popconfirm
+          placement="right"
+          ok-text="Yes"
+          cancel-text="No"
+          @confirm="deletePassword(pass._id)"
+        >
           <template slot="title">
-            <span>Delete Password</span>
+            <p>Are you sure you want to delete this password?</p>
           </template>
-          <a-icon type="delete" @click.stop="deletePassword(pass._id)" />
-        </a-tooltip>
+          <a-icon type="delete" @click.stop="" />
+        </a-popconfirm>
       </div>
     </a-card>
   </div>

@@ -7,7 +7,12 @@
         </a-input>
       </a-col>
       <a-col :span="3" style="text-align: center">
-        <a-button shape="circle" type="primary" icon="plus" @click="newPassword()" />
+        <a-tooltip placement="top">
+          <template slot="title">
+            <span>Add new Password</span>
+          </template>
+          <a-button shape="circle" type="primary" icon="plus" @click="newPassword()" />
+        </a-tooltip>
       </a-col>
     </a-row>
   </a-card>
