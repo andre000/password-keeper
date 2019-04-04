@@ -1,7 +1,7 @@
 <template>
   <div class="password-list">
     <a-card
-      v-for="(pass, k) in passwords"
+      v-for="(pass, k) in filteredPassword"
       :key="k"
       :class="{'selected': pass._id === selectedPassID}"
       class="password-card"
@@ -11,7 +11,7 @@
         <i :class="pass.icon ? pass.icon : 'mdi-help'" class="mdi" />
       </a-avatar>
       <div class="password-text">
-        <span class="password-title">{{ pass.title }}</span> <br>
+        <span class="password-title" v-html="stylizeTitle(pass.title)" /> <br>
         <span class="password-subtitle">{{ pass.username }}</span>
       </div>
       <div class="password-actions">
@@ -23,7 +23,6 @@
         </a-tooltip>
       </div>
     </a-card>
-    <a-button type="primary" shape="circle" icon="plus" @click.self.prevent="newPassword()" />
   </div>
 </template>
 
@@ -39,7 +38,12 @@ export default {
   },
 
   computed: {
-    ...mapState('mainPage', ['selectedPassID']),
+    filteredPassword() {
+      return this.search
+        ? this.passwords.filter(p => new RegExp(this.search, 'gi').test(p.title))
+        : this.passwords;
+    },
+    ...mapState('mainPage', ['selectedPassID', 'search']),
   },
 
   methods: {
@@ -50,9 +54,9 @@ export default {
     deletePassword(id) {
       this.deletePassword(id);
     },
-    newPassword() {
-      this.SET_SELECTED_PASS_ID('NEW');
-      this.SET_SELECTED_PASS({});
+    stylizeTitle(title) {
+      if (!this.search) return title;
+      return title.replace(new RegExp(`(${this.search})`, 'gi'), '<span class="search-highlight">$1</span>');
     },
     ...mapMutations('mainPage', ['SET_SELECTED_PASS_ID', 'SET_SELECTED_PASS']),
     ...mapActions('mainPage', ['deletePassword']),
@@ -107,5 +111,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+  .search-highlight {
+    color: #ff9800 !important;
   }
 </style>

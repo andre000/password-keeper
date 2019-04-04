@@ -9,6 +9,7 @@ import passwordDelete from '@/graphql/passwordDelete.gql';
 export const state = () => ({
   selectedPassID: null,
   selectedPass: null,
+  search: '',
 });
 
 export const mutations = {
@@ -17,6 +18,9 @@ export const mutations = {
   },
   SET_SELECTED_PASS(state, password) {
     state.selectedPass = password;
+  },
+  SET_SEARCH(state, search) {
+    state.search = search;
   },
 };
 

@@ -1,6 +1,7 @@
 <template>
   <a-row :gutter="32">
     <a-col :span="8">
+      <pass-filter />
       <div class="content">
         <pass-list />
       </div>
@@ -17,11 +18,13 @@
 import { mapMutations } from 'vuex';
 import passList from '@/components/index/PassList';
 import passDetail from '@/components/index/PassDetail';
+import passFilter from '@/components/index/PassFilter';
 
 export default {
   components: {
     passList,
     passDetail,
+    passFilter,
   },
 
   created() {
