@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-shadow */
+
 import listPassword from '@/graphql/listPasswords.gql';
 import passwordDetail from '@/graphql/passwordDetail.gql';
 import passwordSave from '@/graphql/passwordSave.gql';
