@@ -4,3 +4,33 @@
 h1, h2, .title, .subtitle {
   font-family: 'PT Sans', sans-serif;
 }
+
+@media (max-width: 575px) {
+  .hidden-xs {
+    display: none !important;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767px){
+  .hidden-md {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+  .hidden-lg {
+    display: none !important;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1119px){
+  .hidden-lg {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .hidden-lg {
+    display: none !important;
+  }
+}

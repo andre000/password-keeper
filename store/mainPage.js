@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-shadow */
+
 import listPassword from '@/graphql/listPasswords.gql';
 import passwordDetail from '@/graphql/passwordDetail.gql';
 import passwordSave from '@/graphql/passwordSave.gql';
@@ -9,6 +10,7 @@ import passwordDelete from '@/graphql/passwordDelete.gql';
 export const state = () => ({
   selectedPassID: null,
   selectedPass: null,
+  search: '',
 });
 
 export const mutations = {
@@ -17,6 +19,9 @@ export const mutations = {
   },
   SET_SELECTED_PASS(state, password) {
     state.selectedPass = password;
+  },
+  SET_SEARCH(state, search) {
+    state.search = search;
   },
 };
 

@@ -1,29 +1,40 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div class="password-list">
     <a-card
-      v-for="(pass, k) in passwords"
+      v-for="(pass, k) in filteredPassword"
       :key="k"
       :class="{'selected': pass._id === selectedPassID}"
       class="password-card"
       @click="selectPassword(pass)"
     >
-      <a-avatar class="password-icon">
-        <i :class="pass.icon ? pass.icon : 'mdi-help'" class="mdi" />
-      </a-avatar>
-      <div class="password-text">
-        <span class="password-title">{{ pass.title }}</span> <br>
-        <span class="password-subtitle">{{ pass.username }}</span>
+      <div class="div-icon hidden-xs">
+        <a-avatar class="password-icon">
+          <i :class="pass.icon ? pass.icon : 'mdi-help'" class="mdi" />
+        </a-avatar>
       </div>
+
+      <div class="div-password">
+        <div class="password-text">
+          <span class="password-title" v-html="stylizeTitle(pass.title)" />
+          <span class="password-subtitle">{{ pass.username }}</span>
+        </div>
+      </div>
+
       <div class="password-actions">
-        <a-tooltip placement="top">
+        <a-popconfirm
+          placement="right"
+          ok-text="Yes"
+          cancel-text="No"
+          @confirm="deletePassword(pass._id)"
+        >
           <template slot="title">
-            <span>Delete Password</span>
+            <p>Are you sure you want to delete this password?</p>
           </template>
-          <a-icon type="delete" @click.stop="deletePassword(pass._id)" />
-        </a-tooltip>
+          <a-icon type="delete" @click.stop="" />
+        </a-popconfirm>
       </div>
     </a-card>
-    <a-button type="primary" shape="circle" icon="plus" @click.self.prevent="newPassword()" />
   </div>
 </template>
 
@@ -39,7 +50,12 @@ export default {
   },
 
   computed: {
-    ...mapState('mainPage', ['selectedPassID']),
+    filteredPassword() {
+      return this.search
+        ? this.passwords.filter(p => new RegExp(this.search, 'gi').test(p.title))
+        : this.passwords;
+    },
+    ...mapState('mainPage', ['selectedPassID', 'search']),
   },
 
   methods: {
@@ -50,9 +66,9 @@ export default {
     deletePassword(id) {
       this.deletePassword(id);
     },
-    newPassword() {
-      this.SET_SELECTED_PASS_ID('NEW');
-      this.SET_SELECTED_PASS({});
+    stylizeTitle(title) {
+      if (!this.search) return title;
+      return title.replace(new RegExp(`(${this.search})`, 'gi'), '<span class="search-highlight">$1</span>');
     },
     ...mapMutations('mainPage', ['SET_SELECTED_PASS_ID', 'SET_SELECTED_PASS']),
     ...mapActions('mainPage', ['deletePassword']),
@@ -61,6 +77,24 @@ export default {
 </script>
 
 <style scoped>
+  @media (max-width: 375px) {
+    .password-subtitle {
+      display: none;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .password-text {
+      padding-left: 0px !important;
+    }
+    .password-title {
+      font-size: 1em !important;
+    }
+    .password-subtitle {
+      font-size: 0.8em !important;
+    }
+  }
+
   .ant-card {
     border: none;
     cursor: pointer;
@@ -74,21 +108,48 @@ export default {
   .ant-card:not(:last-child) {
     margin-bottom: 12px;
   }
-  .password-text {
+
+  .div-password {
     flex-grow: 2;
+    display: inline-block;
+    max-width: 75%;
+  }
+  .div-icon {
+    display: inline-block;
+    max-width: 10%;
+  }
+  .password-actions  {
+    display: inline-block;
+    max-width: 15%;
+  }
+
+  .password-text {
     padding-left: 25px;
+    display: flex;
+    flex-direction: column;
   }
   .password-icon {
     transition: all .2s;
+    min-width: 32px;
   }
 
   .password-title {
     transition: all .2s;
     font-weight: bold;
     font-size: 1.2em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre;
+    display: inline-block;
+    width: 100%;
   }
   .password-subtitle {
-    color: #aaa
+    color: #aaa;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre;
+    display: inline-block;
+    width: 100%;
   }
 
   .password-list {
@@ -107,5 +168,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+  .search-highlight {
+    color: #ff9800 !important;
   }
 </style>
