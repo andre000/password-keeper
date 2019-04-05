@@ -1,13 +1,13 @@
 <template>
   <a-row :gutter="32">
-    <a-col :span="8">
+    <a-col :lg="8" :sm="24">
       <pass-filter />
-      <div class="content">
+      <div class="content list">
         <pass-list />
       </div>
     </a-col>
-    <a-col :span="16">
-      <div class="content">
+    <a-col :lg="16" :sm="24">
+      <div v-show="selectedPassID" class="content detail">
         <pass-detail />
       </div>
     </a-col>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import passList from '@/components/index/PassList';
 import passDetail from '@/components/index/PassDetail';
 import passFilter from '@/components/index/PassFilter';
@@ -25,6 +25,10 @@ export default {
     passList,
     passDetail,
     passFilter,
+  },
+
+  computed: {
+    ...mapState('mainPage', ['selectedPassID']),
   },
 
   created() {
@@ -41,9 +45,22 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 992px) {
+  .content.detail {
+    margin-top: 12px !important;
+  }
+}
+
 .content {
-  height: calc(100vh - 212px);
   overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.content.list {
+  height: calc(100vh - 212px);
+}
+.content.detail {
+  height: calc(100vh - 144px);
 }
 .content.white {
   padding: 5px;

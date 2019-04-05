@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div class="password-list">
     <a-card
@@ -7,13 +8,19 @@
       class="password-card"
       @click="selectPassword(pass)"
     >
-      <a-avatar class="password-icon">
-        <i :class="pass.icon ? pass.icon : 'mdi-help'" class="mdi" />
-      </a-avatar>
-      <div class="password-text">
-        <span class="password-title" v-html="stylizeTitle(pass.title)" /> <br>
-        <span class="password-subtitle">{{ pass.username }}</span>
+      <div class="div-icon hidden-xs">
+        <a-avatar class="password-icon">
+          <i :class="pass.icon ? pass.icon : 'mdi-help'" class="mdi" />
+        </a-avatar>
       </div>
+
+      <div class="div-password">
+        <div class="password-text">
+          <span class="password-title" v-html="stylizeTitle(pass.title)" />
+          <span class="password-subtitle">{{ pass.username }}</span>
+        </div>
+      </div>
+
       <div class="password-actions">
         <a-popconfirm
           placement="right"
@@ -70,6 +77,24 @@ export default {
 </script>
 
 <style scoped>
+  @media (max-width: 375px) {
+    .password-subtitle {
+      display: none;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .password-text {
+      padding-left: 0px !important;
+    }
+    .password-title {
+      font-size: 1em !important;
+    }
+    .password-subtitle {
+      font-size: 0.8em !important;
+    }
+  }
+
   .ant-card {
     border: none;
     cursor: pointer;
@@ -83,21 +108,48 @@ export default {
   .ant-card:not(:last-child) {
     margin-bottom: 12px;
   }
-  .password-text {
+
+  .div-password {
     flex-grow: 2;
+    display: inline-block;
+    max-width: 75%;
+  }
+  .div-icon {
+    display: inline-block;
+    max-width: 10%;
+  }
+  .password-actions  {
+    display: inline-block;
+    max-width: 15%;
+  }
+
+  .password-text {
     padding-left: 25px;
+    display: flex;
+    flex-direction: column;
   }
   .password-icon {
     transition: all .2s;
+    min-width: 32px;
   }
 
   .password-title {
     transition: all .2s;
     font-weight: bold;
     font-size: 1.2em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre;
+    display: inline-block;
+    width: 100%;
   }
   .password-subtitle {
-    color: #aaa
+    color: #aaa;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre;
+    display: inline-block;
+    width: 100%;
   }
 
   .password-list {

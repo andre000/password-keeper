@@ -23,7 +23,7 @@
       </div>
 
       <a-form>
-        <h3>Details</h3>
+        <h3>{{ selectedPassID === 'NEW' ? 'New Password' : 'Details' }}</h3>
         <a-form-item class="form-with-icon" label="Title">
           <pass-icon v-model="pass.icon" :is-editing="isEditing" />
           <a-input v-model="pass.title" :disabled="!isEditing" />
@@ -169,13 +169,19 @@ export default {
 </script>
 
 <style scoped>
+  @media (max-width: 575px) {
+    .password-detail {
+      padding: 18px 28px 9px !important;
+    }
+  }
+
   .password-detail {
     position: relative;
     padding: 36px 56px 18px;
     background: #fff;
   }
   .password-detail:not(:first-child) {
-    margin-top: 18px
+    margin-top: 12px
   }
   .button-detail {
     padding: 18px 0px !important;
@@ -192,6 +198,7 @@ export default {
   }
   .form-with-icon >>> .ant-avatar {
     margin-right: 6px;
+    min-width: 32px;
   }
   input:disabled {
     background: #fff;
