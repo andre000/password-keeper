@@ -1,5 +1,5 @@
 <template>
-  <a-layout id="main-menu">
+  <a-layout id="main-menu" class="ant-layout-has-sider">
     <main-sidebar />
     <a-layout>
       <main-header :user="loggedUser" />

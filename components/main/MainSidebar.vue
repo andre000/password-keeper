@@ -1,6 +1,7 @@
 <template>
   <a-layout-sider
     v-model="collapsed"
+    style="height: 100vh"
     breakpoint="sm"
     collapsible
   >

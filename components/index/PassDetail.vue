@@ -1,6 +1,6 @@
 <template>
   <div v-if="selectedPassID">
-    <div class="password-detail">
+    <div v-if="!loading.detail" class="password-detail">
       <div class="password-tools">
         <a-tooltip v-if="!isEditing">
           <template slot="title">
@@ -33,8 +33,15 @@
         </a-form-item>
       </a-form>
     </div>
+    <a-skeleton
+      :avatar="true"
+      :paragraph="{rows: 4}"
+      :title="false"
+      active
+      class="password-detail"
+    />
 
-    <div class="password-detail">
+    <div v-if="!loading.detail" class="password-detail">
       <a-form>
         <h3>Fields</h3>
         <pass-field
@@ -67,6 +74,7 @@
         </a-button>
       </a-form>
     </div>
+    <a-skeleton v-else :avatar="false" :title="false" active class="password-detail" />
   </div>
 </template>
 
@@ -91,7 +99,7 @@ export default {
   }),
 
   computed: {
-    ...mapState('mainPage', ['selectedPassID', 'selectedPass']),
+    ...mapState('mainPage', ['selectedPassID', 'selectedPass', 'loading']),
   },
 
   watch: {
