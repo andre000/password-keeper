@@ -34,8 +34,9 @@
       </a-form>
     </div>
     <a-skeleton
+      v-else
       :avatar="true"
-      :paragraph="{rows: 4}"
+      :paragraph="{rows: 7}"
       :title="false"
       active
       class="password-detail"
@@ -74,13 +75,19 @@
         </a-button>
       </a-form>
     </div>
-    <a-skeleton v-else :avatar="false" :title="false" active class="password-detail" />
+    <a-skeleton
+      v-else
+      :avatar="false"
+      :title="false"
+      :paragraph="{rows: 4}"
+      active
+      class="password-detail"
+    />
   </div>
 </template>
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
-// import decryptOne from '@/graphql/decrypt.gql';
 import PassField from '@/components/index/PassField';
 import PassNewField from '@/components/index/PassNewField';
 import PassIcon from '@/components/index/PassIcon';
