@@ -17,7 +17,19 @@
 </template>
 
 <script>
+import {
+  Input,
+  Tooltip,
+  Button,
+} from 'ant-design-vue';
+
 export default {
+  components: {
+    AInput: Input,
+    AInputGroup: Input.Group,
+    ATooltip: Tooltip,
+    AButton: Button,
+  },
   props: {
     title: {
       type: String,

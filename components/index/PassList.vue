@@ -1,45 +1,60 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <div class="password-list">
-    <a-card
-      v-for="(pass, k) in filteredPassword"
-      :key="k"
-      :class="{'selected': pass._id === selectedPassID}"
-      class="password-card"
-      @click="selectPassword(pass)"
-    >
-      <div class="div-icon hidden-xs">
-        <a-avatar class="password-icon">
-          <i :class="pass.icon ? pass.icon : 'mdi-help'" class="mdi" />
-        </a-avatar>
-      </div>
-
-      <div class="div-password">
-        <div class="password-text">
-          <span class="password-title" v-html="stylizeTitle(pass.title)" />
-          <span class="password-subtitle">{{ pass.username }}</span>
+  <div>
+    <div v-if="$apolloData.loading === 0" class="password-list">
+      <a-card
+        v-for="(pass, k) in filteredPassword"
+        :key="k"
+        :class="{'selected': pass._id === selectedPassID}"
+        class="password-card"
+        @click="selectPassword(pass)"
+      >
+        <div class="div-icon hidden-xs">
+          <a-avatar class="password-icon">
+            <i :class="pass.icon ? pass.icon : 'mdi-help'" class="mdi" />
+          </a-avatar>
         </div>
-      </div>
 
-      <div class="password-actions">
-        <a-popconfirm
-          placement="right"
-          ok-text="Yes"
-          cancel-text="No"
-          @confirm="deletePassword(pass._id)"
-        >
-          <template slot="title">
-            <p>Are you sure you want to delete this password?</p>
-          </template>
-          <a-icon type="delete" @click.stop="" />
-        </a-popconfirm>
-      </div>
-    </a-card>
+        <div class="div-password">
+          <div class="password-text">
+            <span class="password-title" v-html="stylizeTitle(pass.title)" />
+            <span class="password-subtitle">{{ pass.username }}</span>
+          </div>
+        </div>
+
+        <div class="password-actions">
+          <a-popconfirm
+            placement="right"
+            ok-text="Yes"
+            cancel-text="No"
+            @confirm="deletePassword(pass._id)"
+          >
+            <template slot="title">
+              <p>Are you sure you want to delete this password?</p>
+            </template>
+            <a-icon type="delete" @click.stop="" />
+          </a-popconfirm>
+        </div>
+      </a-card>
+    </div>
+    <div v-else>
+      <a-skeleton :title="false" :avatar="true" active />
+      <a-skeleton :title="false" :avatar="true" active />
+      <a-skeleton :title="false" :avatar="true" active />
+    </div>
   </div>
 </template>
 
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex';
+import {
+  Card,
+  Icon,
+  Avatar,
+  Popconfirm,
+  Skeleton,
+} from 'ant-design-vue';
+
 import passList from '@/graphql/listPasswords.gql';
 
 export default {
@@ -47,6 +62,14 @@ export default {
     passwords: {
       query: passList,
     },
+  },
+
+  components: {
+    ACard: Card,
+    AIcon: Icon,
+    AAvatar: Avatar,
+    APopconfirm: Popconfirm,
+    ASkeleton: Skeleton,
   },
 
   computed: {
@@ -93,6 +116,12 @@ export default {
     .password-subtitle {
       font-size: 0.8em !important;
     }
+  }
+
+  .ant-skeleton {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 12px;
   }
 
   .ant-card {

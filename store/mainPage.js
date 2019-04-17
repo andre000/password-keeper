@@ -11,6 +11,10 @@ export const state = () => ({
   selectedPassID: null,
   selectedPass: null,
   search: '',
+
+  loading: {
+    detail: false,
+  },
 });
 
 export const mutations = {
@@ -23,6 +27,9 @@ export const mutations = {
   SET_SEARCH(state, search) {
     state.search = search;
   },
+  SET_LOADING_DETAIL(state, loading) {
+    state.loading.detail = loading;
+  },
 };
 
 export const actions = {
@@ -30,11 +37,13 @@ export const actions = {
     if (!id) {
       return store.commit('SET_SELECTED_PASS', null);
     }
+    store.commit('SET_LOADING_DETAIL', true);
     const client = this.app.apolloProvider.defaultClient;
     const { data } = await client.query({
       query: passwordDetail,
       variables: { id },
     });
+    store.commit('SET_LOADING_DETAIL', false);
     return store.commit('SET_SELECTED_PASS', data.password);
   },
 

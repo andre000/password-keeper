@@ -1,6 +1,6 @@
 <template>
   <div v-if="selectedPassID">
-    <div class="password-detail">
+    <div v-if="!loading.detail" class="password-detail">
       <div class="password-tools">
         <a-tooltip v-if="!isEditing">
           <template slot="title">
@@ -33,8 +33,16 @@
         </a-form-item>
       </a-form>
     </div>
+    <a-skeleton
+      v-else
+      :avatar="true"
+      :paragraph="{rows: 7}"
+      :title="false"
+      active
+      class="password-detail"
+    />
 
-    <div class="password-detail">
+    <div v-if="!loading.detail" class="password-detail">
       <a-form>
         <h3>Fields</h3>
         <pass-field
@@ -67,20 +75,44 @@
         </a-button>
       </a-form>
     </div>
+    <a-skeleton
+      v-else
+      :avatar="false"
+      :title="false"
+      :paragraph="{rows: 4}"
+      active
+      class="password-detail"
+    />
   </div>
 </template>
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
-// import decryptOne from '@/graphql/decrypt.gql';
+
+import {
+  Tooltip,
+  Button,
+  Form,
+  Input,
+  Skeleton,
+  Icon,
+} from 'ant-design-vue';
+
 import PassField from '@/components/index/PassField';
 import PassNewField from '@/components/index/PassNewField';
-import PassIcon from '@/components/index/PassIcon';
+
 
 export default {
   components: {
+    ATooltip: Tooltip,
+    AButton: Button,
+    AInput: Input,
+    AForm: Form,
+    AFormItem: Form.Item,
+    ASkeleton: Skeleton,
+    AIcon: Icon,
     PassField,
-    PassIcon,
+    PassIcon: () => import('@/components/index/PassIcon'),
     PassNewField,
   },
 
@@ -91,7 +123,7 @@ export default {
   }),
 
   computed: {
-    ...mapState('mainPage', ['selectedPassID', 'selectedPass']),
+    ...mapState('mainPage', ['selectedPassID', 'selectedPass', 'loading']),
   },
 
   watch: {

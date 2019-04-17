@@ -48,10 +48,27 @@
 </template>
 
 <script>
+import {
+  Row,
+  Col,
+  Input,
+  Icon,
+  Checkbox,
+  Button,
+} from 'ant-design-vue';
+
 import { login, logout } from '../utils';
 
 export default {
   layout: 'login',
+  components: {
+    ARow: Row,
+    ACol: Col,
+    AInput: Input,
+    AIcon: Icon,
+    ACheckbox: Checkbox,
+    AButton: Button,
+  },
   data: () => ({
     email: '',
     password: '',

@@ -1,5 +1,5 @@
 <template>
-  <a-layout id="main-menu">
+  <a-layout id="main-menu" class="ant-layout-has-sider">
     <main-sidebar />
     <a-layout>
       <main-header :user="loggedUser" />
@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { Layout } from 'ant-design-vue';
+
 import mainSidebar from '@/components/main/MainSidebar';
 import mainHeader from '@/components/main/MainHeader';
 import { loggedUser } from '../graphql';
@@ -18,6 +20,8 @@ import { loggedUser } from '../graphql';
 export default {
   middleware: 'auth',
   components: {
+    ALayout: Layout,
+    ALayoutContent: Layout.Content,
     mainSidebar,
     mainHeader,
   },

@@ -33,9 +33,20 @@
 </template>
 
 <script>
-import * as mdi from '@mdi/js';
+import {
+  Avatar,
+  Popover,
+  AutoComplete,
+  Select,
+} from 'ant-design-vue';
 
 export default {
+  components: {
+    AAvatar: Avatar,
+    APopover: Popover,
+    AAutoComplete: AutoComplete,
+    ASelectOption: Select.Option,
+  },
   props: {
     value: {
       type: String,
@@ -51,6 +62,7 @@ export default {
   data: () => ({
     visible: false,
     iconList: null,
+    mdi: [],
   }),
 
   computed: {
@@ -85,18 +97,22 @@ export default {
       this.$emit('input', value);
       this.handlePopover();
     },
-    getIconList(search) {
+    async getIconList(search) {
       const realSearch = search.replace(/mdi|-/, '').toLowerCase();
       if (realSearch.length < 3) {
         this.iconList = [];
         return;
       }
 
-      this.iconList = Object.keys(mdi)
+      if (this.mdi.length === 0) {
+        this.mdi = await import(/* webpackPrefetch: true *//* webpackChunkName: "mdi"  */ '@mdi/js');
+      }
+
+      this.iconList = Object.keys(this.mdi)
         .filter(k => k.toLowerCase().match(realSearch))
         .map(k => ({
           title: k.replace(/([A-Z])/g, '-$1').toLowerCase(),
-          value: mdi[k],
+          value: this.mdi[k],
         }));
     },
   },

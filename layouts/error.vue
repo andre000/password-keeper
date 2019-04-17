@@ -8,7 +8,13 @@
 </template>
 
 <script>
+import { Icon } from 'ant-design-vue';
+
 export default {
+  components: {
+    AIcon: Icon,
+  },
+
   props: {
     error: {
       type: Object,

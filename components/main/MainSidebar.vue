@@ -1,6 +1,7 @@
 <template>
   <a-layout-sider
     v-model="collapsed"
+    style="height: 100vh"
     breakpoint="sm"
     collapsible
   >
@@ -12,7 +13,11 @@
         PK
       </template>
     </div>
-    <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
+    <a-menu
+      theme="dark"
+      mode="vertical"
+      :default-selected-keys="['1']"
+    >
       <a-menu-item key="1" @click="$router.push('/')">
         <a-icon type="bars" />
         <span>All Items</span>
@@ -26,7 +31,20 @@
 </template>
 
 <script>
+import {
+  Layout,
+  Icon,
+  Menu,
+} from 'ant-design-vue';
+
 export default {
+  components: {
+    AMenu: Menu,
+    AMenuItem: Menu.Item,
+    AMenuDivider: Menu.Divider,
+    AIcon: Icon,
+    ALayoutSider: Layout.Sider,
+  },
   data: () => ({
     collapsed: false,
   }),

@@ -34,10 +34,26 @@
 </template>
 
 <script>
+import {
+  Input,
+  Form,
+  Tooltip,
+  Icon,
+  message,
+} from 'ant-design-vue';
+
 import { copyToClipboard } from '@/utils';
 import decryptOne from '@/graphql/decrypt.gql';
 
 export default {
+  components: {
+    AInput: Input,
+    AInputGroup: Input.Group,
+    AFormItem: Form.Item,
+    ATooltip: Tooltip,
+    AIcon: Icon,
+  },
+
   props: {
     value: {
       type: String,
@@ -85,6 +101,10 @@ export default {
       }
       this.decryped = false;
     },
+  },
+
+  mounted() {
+    this.$message = message;
   },
 
   methods: {
