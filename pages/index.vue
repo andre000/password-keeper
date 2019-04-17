@@ -16,12 +16,19 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex';
+import {
+  Row,
+  Col,
+} from 'ant-design-vue';
+
 import passList from '@/components/index/PassList';
 import passDetail from '@/components/index/PassDetail';
 import passFilter from '@/components/index/PassFilter';
 
 export default {
   components: {
+    ARow: Row,
+    ACol: Col,
     passList,
     passDetail,
     passFilter,

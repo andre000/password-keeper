@@ -47,6 +47,14 @@
 
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex';
+import {
+  Card,
+  Icon,
+  Avatar,
+  Popconfirm,
+  Skeleton,
+} from 'ant-design-vue';
+
 import passList from '@/graphql/listPasswords.gql';
 
 export default {
@@ -54,6 +62,14 @@ export default {
     passwords: {
       query: passList,
     },
+  },
+
+  components: {
+    ACard: Card,
+    AIcon: Icon,
+    AAvatar: Avatar,
+    APopconfirm: Popconfirm,
+    ASkeleton: Skeleton,
   },
 
   computed: {

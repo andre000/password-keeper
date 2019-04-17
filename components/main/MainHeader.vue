@@ -9,10 +9,12 @@
 </template>
 
 <script>
+import { Layout } from 'ant-design-vue';
 import UserAvatar from './UserAvatar';
 
 export default {
   components: {
+    ALayoutHeader: Layout.Header,
     UserAvatar,
   },
   props: {

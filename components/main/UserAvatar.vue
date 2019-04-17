@@ -23,8 +23,22 @@
 </template>
 
 <script>
-export default {
+import {
+  Avatar,
+  Menu,
+  Dropdown,
+  Icon,
+} from 'ant-design-vue';
 
+export default {
+  components: {
+    AAvatar: Avatar,
+    AMenu: Menu,
+    AMenuItem: Menu.Item,
+    AMenuDivider: Menu.Divider,
+    ADropdown: Dropdown,
+    AIcon: Icon,
+  },
 };
 </script>
 

@@ -88,14 +88,31 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
+
+import {
+  Tooltip,
+  Button,
+  Form,
+  Input,
+  Skeleton,
+  Icon,
+} from 'ant-design-vue';
+
 import PassField from '@/components/index/PassField';
 import PassNewField from '@/components/index/PassNewField';
-import PassIcon from '@/components/index/PassIcon';
+
 
 export default {
   components: {
+    ATooltip: Tooltip,
+    AButton: Button,
+    AInput: Input,
+    AForm: Form,
+    AFormItem: Form.Item,
+    ASkeleton: Skeleton,
+    AIcon: Icon,
     PassField,
-    PassIcon,
+    PassIcon: () => import('@/components/index/PassIcon'),
     PassNewField,
   },
 

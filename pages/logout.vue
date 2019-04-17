@@ -8,10 +8,14 @@
 </template>
 
 <script>
+import { Icon } from 'ant-design-vue';
 import { logout } from '../utils';
 
 export default {
   layout: 'message',
+  components: {
+    AIcon: Icon,
+  },
   async mounted() {
     await logout(this.$store, this.$apolloHelpers);
     setTimeout(() => {

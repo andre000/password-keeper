@@ -20,8 +20,26 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex';
+import {
+  Card,
+  Row,
+  Col,
+  Input,
+  Icon,
+  Tooltip,
+  Button,
+} from 'ant-design-vue';
 
 export default {
+  components: {
+    ACard: Card,
+    ARow: Row,
+    ACol: Col,
+    AInput: Input,
+    AIcon: Icon,
+    ATooltip: Tooltip,
+    AButton: Button,
+  },
   computed: {
     searchFilter: {
       get() { return this.search; },
