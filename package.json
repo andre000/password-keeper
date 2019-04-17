@@ -1,6 +1,6 @@
 {
   "name": "password-keeper",
-  "version": "0.7.8",
+  "version": "0.7.12",
   "description": "Application for managing passwords",
   "author": "Andre",
   "private": true,
