@@ -31,6 +31,9 @@
         <a-form-item label="Username">
           <a-input v-model="pass.username" :disabled="!isEditing" />
         </a-form-item>
+        <a-form-item v-if="pass.notes || isEditing" label="Notes">
+          <pass-notes v-model="pass.notes" :disabled="!isEditing" />
+        </a-form-item>
       </a-form>
     </div>
     <a-skeleton
@@ -99,7 +102,7 @@ import {
 } from 'ant-design-vue';
 
 import PassField from '@/components/index/PassField';
-import PassNewField from '@/components/index/PassNewField';
+import PassNotes from '@/components/index/PassNotes';
 
 
 export default {
@@ -112,8 +115,9 @@ export default {
     ASkeleton: Skeleton,
     AIcon: Icon,
     PassField,
+    PassNotes,
     PassIcon: () => import('@/components/index/PassIcon'),
-    PassNewField,
+    PassNewField: () => import('@/components/index/PassNewField'),
   },
 
   data: () => ({
@@ -142,6 +146,7 @@ export default {
     enableEdit() {
       this.isEditing = true;
     },
+
     async saveEdit() {
       const editedPass = this.pass;
       if (!editedPass.fields) {
@@ -163,6 +168,7 @@ export default {
         title: editedPass.title,
         username: editedPass.username,
         fields: editedPass.fields,
+        notes: editedPass.notes,
       });
 
       this.newFields = [];
@@ -232,7 +238,7 @@ export default {
     margin-right: 6px;
     min-width: 32px;
   }
-  input:disabled {
+  input:disabled, textarea:disabled {
     background: #fff;
     color: #888;
     cursor: initial;
